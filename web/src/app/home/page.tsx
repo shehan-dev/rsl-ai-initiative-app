@@ -47,6 +47,7 @@ export default function HomePage() {
   const categorySnapshot = summary?.categoryBreakdown ?? [];
   const recentTransactions = summary?.recentTransactions ?? [];
   const activeGoal = summary?.activeGoal;
+  const maxCategoryTotal = Math.max(...categorySnapshot.map((entry) => entry.total), 1);
 
   return (
     <AppShell title="Apex Ledger" subtitle={summary?.month ?? "Loading..."}>
@@ -105,7 +106,7 @@ export default function HomePage() {
                   <p className="muted">Rs. {entry.total.toLocaleString()}</p>
                 </div>
                 <div className="progress">
-                  <span style={{ width: `${entry.percent}%` }} />
+                  <span style={{ width: `${Math.max(8, Math.round((entry.total / maxCategoryTotal) * 100))}%` }} />
                 </div>
               </div>
             ))
